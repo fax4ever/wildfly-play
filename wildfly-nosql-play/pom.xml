@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.redhat.demo</groupId>
-    <artifactId>wildfly-custom-jndi-lookup</artifactId>
+    <artifactId>wildfly-nosql-play</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -15,13 +15,23 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <!-- Wildfly Application Server -->
+        <!-- WildFly Application Server -->
         <wildfly.version>13.0.0.Final</wildfly.version>
         <wildfly.name>wildfly-${wildfly.version}</wildfly.name>
         <wildfly.home>${project.build.directory}/${wildfly.name}</wildfly.home>
 
+        <!-- WildFly NoSql -->
+        <wildfly.nosql.version>1.0.0.Alpha6</wildfly.nosql.version>
+
         <!-- SLF4J -->
         <slf4j.version>1.7.22</slf4j.version>
+
+        <!-- MongoDB-->
+        <mongodb.version>3.2.2</mongodb.version>
+
+        <!--Remove the skip if you have a MongoDB running on:-->
+        <!--<remote-destination host="localhost" port="27018"/>-->
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -49,10 +59,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- LOG -->
+        <!-- MongoDB -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongodb.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -113,8 +124,33 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
-                            <config-file>provisioning-wildfly.xml</config-file>
+                            <config-file>wildfly.xml</config-file>
                             <server-name>${wildfly.name}</server-name>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <!-- Update configurations -->
+                    <execution>
+                        <id>update-jboss-config</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${wildfly.home}/standalone/configuration</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/test/resources/config</directory>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -123,6 +159,9 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.21.0</version>
+                <configuration>
+                    <skip>${skipTests}</skip>
+                </configuration>
                 <executions>
                     <!-- Run arquillian integration test -->
                     <execution>

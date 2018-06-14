@@ -10,6 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>wildfly-custom-jndi-lookup</module>
+        <module>wildfly-nosql-play</module>
     </modules>
 </project>
