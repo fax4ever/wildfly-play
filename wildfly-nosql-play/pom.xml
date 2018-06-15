@@ -23,11 +23,12 @@
         <!-- WildFly NoSql -->
         <wildfly.nosql.version>1.0.0.Alpha6</wildfly.nosql.version>
 
+        <!-- Hibernate OGM -->
+        <!-- FIXME: waiting for 5.4.0.FINAL -->
+        <hibernate.ogm.version>5.4.0-SNAPSHOT</hibernate.ogm.version>
+
         <!-- SLF4J -->
         <slf4j.version>1.7.22</slf4j.version>
-
-        <!-- MongoDB-->
-        <mongodb.version>3.2.2</mongodb.version>
 
         <!--Remove the skip if you have a MongoDB running on:-->
         <!--<remote-destination host="localhost" port="27018"/>-->
@@ -40,6 +41,14 @@
                 <groupId>org.wildfly.bom</groupId>
                 <artifactId>wildfly-javaee7-with-tools</artifactId>
                 <version>${wildfly.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-bom</artifactId>
+                <version>${hibernate.ogm.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -63,7 +72,6 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>${mongodb.version}</version>
             <scope>provided</scope>
         </dependency>
 
