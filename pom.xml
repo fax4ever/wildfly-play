@@ -11,5 +11,6 @@
 
     <modules>
         <module>wildfly-nosql-play</module>
+        <module>wildfly-rest-play</module>
     </modules>
 </project>
