@@ -1,7 +1,5 @@
 package it.redhat.demo.jaxrs;
 
-import static org.junit.Assert.assertEquals;
-
 import java.net.URL;
 import javax.ws.rs.client.ClientBuilder;
 
@@ -26,7 +24,7 @@ public class JaxRsIT {
 	@Deployment
 	public static WebArchive createDeployment() {
 		return ShrinkWrap.create( WebArchive.class )
-				.addClasses( RestConfig.class, RestService.class );
+				.addPackages( true, RestConfig.class.getPackage() );
 	}
 
 	@ArquillianResource
@@ -34,14 +32,23 @@ public class JaxRsIT {
 
 	@Test
 	@RunAsClient
-	public void test() {
-
-		LOG.info( "Server url {}", deploymentURL );
-
+	public void jaxrsMapper() {
 		String response = ClientBuilder.newClient()
 				.target( deploymentURL.toString() )
+				.path( "jaxrsMapper" )
 				.request().get( String.class );
 
-		assertEquals( "ciao", response );
+		LOG.info( "Response on /jaxrsMapper url: {}", response );
+	}
+
+	@Test
+	@RunAsClient
+	public void jacksonMapper() {
+		String response = ClientBuilder.newClient()
+				.target( deploymentURL.toString() )
+				.path( "jacksonMapper" )
+				.request().get( String.class );
+
+		LOG.info( "Response on /jacksonMapper url: {}", response );
 	}
 }
