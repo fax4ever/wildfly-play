@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+    <deployment>
+        <exclusions>
+            <!-- without this exclusions our custom object mapper provider class: it.redhat.demo.jaxrs.JacksonConfig -->
+            <!-- is useless!!! -->
+            <module name="org.jboss.resteasy.resteasy-json-binding-provider" />
+        </exclusions>
+    </deployment>
+</jboss-deployment-structure>

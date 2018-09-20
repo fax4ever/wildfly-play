@@ -17,7 +17,6 @@
 
         <version.wildfly>13.0.0.Final</version.wildfly>
         <version.apache.http.client>4.5.3</version.apache.http.client>
-        <version.apache.commons.io>2.5</version.apache.commons.io>
         <version.slf4j>1.7.22</version.slf4j>
 
         <name.wildfly>wildfly-${version.wildfly}</name.wildfly>
@@ -113,13 +112,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${version.apache.http.client}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${version.apache.commons.io}</version>
             <scope>test</scope>
         </dependency>
 

@@ -12,7 +12,10 @@ public class Car {
 
 	public Car(String colour) {
 		this.colour = colour;
+
+		// at the beginning fo time!
 		this.registeredOn = new Date();
+		this.registeredOn.setTime( 0l );
 	}
 
 	public String getColour() {
